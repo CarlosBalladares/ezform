@@ -1,0 +1,27 @@
+{
+  "name": "custom-boilerplate",
+  "version": "0.0.1",
+  "description": "BoilerPlate to start react projects",
+  "main": "dist/index.js",
+  "author": "Carlos Balladares",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "node ./server.js",
+    "buildDev": "rimraf dist && webpack --config webpack.server.config.js"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "^8.0.6",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
+    "webpack": "^4.38.0",
+    "webpack-cli": "^3.3.6",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

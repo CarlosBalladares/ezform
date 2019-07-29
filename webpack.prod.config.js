@@ -1,33 +1,43 @@
 const path = require("path");
-const webpack = require("webpack");
-const nodeExternals = require("webpack-node-externals");
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 
 module.exports = (env, argv) => {
-  const SERVER_PATH = "./server.js";
   return {
-    mode: "development",
-    entry: {
-      server: SERVER_PATH
-    },
+    mode: "production",
+    entry: { main: "./src/index.js" },
     output: {
-      path: path.join(__dirname, "dist"),
+      path: path.resolve(__dirname, "./dist"),
       publicPath: "/",
       filename: "[name].js"
     },
-    target: "node",
-    node: {
-      __dirname: false,
-      __filename: false
+    target: "web",
+    devtool: "source-map",
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: false
+        }),
+        new OptimizeCSSAssetsPlugin({})
+      ]
     },
-    externals: [nodeExternals()],
     module: {
       rules: [
         {
           test: /\.js$/,
           exclude: /node_modules/,
+          loader: "babel-loader"
+        },
+        {
+          test: /\.html/,
           use: {
-            loader: "babel-loader"
+            loader: "html-loader"
           }
         },
         {
@@ -47,17 +57,25 @@ module.exports = (env, argv) => {
               }
             }
           ]
+        },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: ["file-loader"]
         }
       ]
     },
     plugins: [
+      // new HtmlWebPackPlugin({
+      //   template: "./src/index.html",
+      //   filename: "./index.html",
+      //   excludeChunks: ["server"]
+      // }),
       new ExtractCssChunks({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
         filename: "[name].css",
         chunkFilename: "[id].css",
-        orderWarning: true, // Disable to remove warnings about conflicting order between imports,
-        excludeChunks: ["server"]
+        orderWarning: true // Disable to remove warnings about conflicting order between imports
       })
     ]
   };

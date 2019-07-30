@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
+const { StatsWriterPlugin } = require("webpack-stats-plugin");
 
 module.exports = (env, argv) => {
   return {
@@ -13,7 +14,7 @@ module.exports = (env, argv) => {
     output: {
       path: path.resolve(__dirname, "./dist"),
       publicPath: "/",
-      filename: "[name].js"
+      filename: "[name].[hash].js"
     },
     target: "web",
     devtool: "source-map",
@@ -73,9 +74,12 @@ module.exports = (env, argv) => {
       new ExtractCssChunks({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: "[name].css",
-        chunkFilename: "[id].css",
+        filename: "[name].[hash].css",
+        chunkFilename: "[id].[hash].css",
         orderWarning: true // Disable to remove warnings about conflicting order between imports
+      }),
+      new StatsWriterPlugin({
+        filename: "stats.json" // Default
       })
     ]
   };

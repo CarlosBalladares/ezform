@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
+const { StatsWriterPlugin } = require("webpack-stats-plugin");
 
 module.exports = (env, argv) => {
   const SERVER_PATH = "./server.js";
@@ -17,7 +18,7 @@ module.exports = (env, argv) => {
     },
     target: "node",
     node: {
-      __dirname: false,
+      __dirname: true,
       __filename: false
     },
     externals: [nodeExternals()],
@@ -58,6 +59,9 @@ module.exports = (env, argv) => {
         chunkFilename: "[id].css",
         orderWarning: true, // Disable to remove warnings about conflicting order between imports,
         excludeChunks: ["server"]
+      }),
+      new StatsWriterPlugin({
+        filename: "stats.json" // Default
       })
     ]
   };

@@ -2,7 +2,14 @@ doctype html
 html
   head
     title YARB
+    each style in styles
+      link(rel="stylesheet" type="text/css" href=style)
+    
   body
     #root !{content}
+    each script in scripts
+      script(src=script)
+
+     
   //- script(type="text/javascript" src="/main.js")
 

@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
+const { StatsWriterPlugin } = require("webpack-stats-plugin");
 
 module.exports = (env, argv) => {
   return {
@@ -64,6 +65,9 @@ module.exports = (env, argv) => {
         chunkFilename: "[id].css",
         orderWarning: true, // Disable to remove warnings about conflicting order between imports
         excludeChunks: ["server"]
+      }),
+      new StatsWriterPlugin({
+        filename: "stats.json" // Default
       })
     ]
   };

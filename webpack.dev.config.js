@@ -1,5 +1,4 @@
 const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
@@ -53,11 +52,6 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
-      // new HtmlWebPackPlugin({
-      //   template: "./src/index.html",
-      //   filename: "./index.html",
-      //   excludeChunks: ["server"]
-      // }),
       new ExtractCssChunks({
         // Options similar to the same options in webpackOptions.output
         // both options are optional

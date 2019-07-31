@@ -4,7 +4,8 @@ const nodeExternals = require("webpack-node-externals");
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 
 module.exports = (env, argv) => {
-  const SERVER_PATH = "./server.js";
+  const SERVER_PATH =
+    process.env.MODE === "dev" ? "./server-dev.js" : "./server.js";
   return {
     mode: "development",
     entry: {

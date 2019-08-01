@@ -51,6 +51,7 @@ module.exports = (env, argv) => {
         }
       ]
     },
+    // watch: true,
     plugins: [
       new ExtractCssChunks({
         // Options similar to the same options in webpackOptions.output

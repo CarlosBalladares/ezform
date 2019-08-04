@@ -6,6 +6,8 @@ Custom simple and light boilerplate I maintain to bootstrap web projects.
 - React
 - css modules
 - production nd developemnet builds.
+- HMR
+
 
 ## Scripts
 
@@ -18,6 +20,5 @@ To run a production build
 ## Pending
 
 - Unit tests
-- HMR
 - sass support
 - Typescript

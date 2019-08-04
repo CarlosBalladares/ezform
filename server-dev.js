@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import App from "./src/App";
+import config from "./webpack.dev.config.js";
 
 const webpack = require("webpack");
-const middleware = require("webpack-dev-middleware");
-const compiler = webpack({
+// const middleware = require("webpack-dev-middleware");
+const compiler = webpack(
   // webpack options
-});
+  config
+);
+
+var webpackDevMiddleware = require("webpack-dev-middleware");
+var webpackHotMiddleware = require("webpack-hot-middleware");
 
 const path = require("path");
 const express = require("express");
@@ -45,12 +50,23 @@ const parsedStats = Object.values(stats.assetsByChunkName)
 
 console.log("parsedStats", parsedStats);
 
-app.use(middleware(compiler, {}));
+app.use(webpackDevMiddleware(compiler, {}));
+
+app.use(
+  webpackHotMiddleware(compiler, {
+    log: console.log,
+    path: "/__webpack_hmr",
+    heartbeat: 10 * 1000
+  })
+);
 
 app.use(express.static(DIST_DIR));
 app.set("view engine", "pug");
 app.get("/*", (req, res) => {
+  console.log("hello");
   const content = ReactDOMServer.renderToString(<App />);
+  console.log(content);
+
   const [scripts, styles] = parsedStats;
 
   res.render("index", { content, scripts, styles });

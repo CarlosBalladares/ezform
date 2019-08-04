@@ -14,8 +14,8 @@
   },
   "scripts": {
     "start": "node ./dist/server.js",
-    "buildDev": "rimraf dist && webpack --config webpack.server.config.js && webpack --config webpack.dev.config.js",
-    "buildProd": "rimraf dist && webpack --config webpack.server.config.js && webpack --config webpack.prod.config.js",
+    "buildDev": "rimraf dist && webpack --mode development --config webpack.server.config.js && webpack --mode development --config webpack.dev.config.js",
+    "buildProd": "rimraf dist && webpack --mode production --config webpack.server.config.js && webpack --mode production --config webpack.prod.config.js",
     "dev": "yarn buildDev && yarn start",
     "prod": "yarn buildProd && yarn start"
   },
@@ -36,6 +36,7 @@
     "webpack": "^4.38.0",
     "webpack-cli": "^3.3.6",
     "webpack-dev-middleware": "^3.7.0",
+    "webpack-hot-middleware": "^2.25.0",
     "webpack-node-externals": "^1.7.2",
     "webpack-stats-plugin": "^0.3.0"
   },

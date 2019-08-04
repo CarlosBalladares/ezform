@@ -5,7 +5,8 @@ const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 
 module.exports = (env, argv) => {
   const SERVER_PATH =
-    process.env.MODE === "dev" ? "./server-dev.js" : "./server.js";
+    argv.mode === "production" ? "./server.js" : "./server-dev.js";
+
   return {
     mode: "development",
     entry: {

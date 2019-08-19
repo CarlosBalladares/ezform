@@ -1,0 +1,14 @@
+.root {
+  width: 100%;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+}
+
+.item {
+  color: #999999;
+}
+.itemSelected {
+  color: #3890fc;
+}

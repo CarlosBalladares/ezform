@@ -1,3 +1,4 @@
+import { ServerStyleSheets, ThemeProvider } from "@material-ui/styles";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import App from "./src/App";
@@ -48,8 +49,6 @@ const parsedStats = Object.values(stats.assetsByChunkName)
     [[], []]
   );
 
-console.log("parsedStats", parsedStats);
-
 app.use(webpackDevMiddleware(compiler, {}));
 
 app.use(
@@ -63,13 +62,21 @@ app.use(
 app.use(express.static(DIST_DIR));
 app.set("view engine", "pug");
 app.get("/*", (req, res) => {
-  console.log("hello");
-  const content = ReactDOMServer.renderToString(<App />);
-  console.log(content);
+  // console.log("hello");
+  const materialUIssr = new ServerStyleSheets();
+
+  const content = ReactDOMServer.renderToString(
+    materialUIssr.collect(
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    )
+  );
+  // console.log(content);
 
   const [scripts, styles] = parsedStats;
 
-  res.render("index", { content, scripts, styles });
+  res.render("index", { content, scripts, styles, materialUIssr });
 });
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

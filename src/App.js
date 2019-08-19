@@ -1,6 +1,15 @@
 import React from "react";
-import HelloWorld from "./components/Helloworld";
+import styles from "./App.module.css";
+import BottomNavBar from "./components/BottomNavBar";
+import Search from "./views/Search";
 
-const App = () => <HelloWorld />;
+const App = () => (
+  <>
+    <div className={styles.root}>
+      <Search />
+      <BottomNavBar />
+    </div>
+  </>
+);
 
 export default App;

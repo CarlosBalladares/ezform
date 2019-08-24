@@ -49,6 +49,10 @@ module.exports = (env, argv) => {
               }
             }
           ]
+        },
+        {
+          test: /\.(jpe?g|png|gif|svg|ico)$/i,
+          use: 'url-loader?limit=8192'
         }
       ]
     },

@@ -8,47 +8,8 @@ import deburr from "lodash/deburr";
 import PropTypes from "prop-types";
 import React from "react";
 
-const suggestions = [
-  { label: "Afghanistan" },
-  { label: "Aland Islands" },
-  { label: "Albania" },
-  { label: "Algeria" },
-  { label: "American Samoa" },
-  { label: "Andorra" },
-  { label: "Angola" },
-  { label: "Anguilla" },
-  { label: "Antarctica" },
-  { label: "Antigua and Barbuda" },
-  { label: "Argentina" },
-  { label: "Armenia" },
-  { label: "Aruba" },
-  { label: "Australia" },
-  { label: "Austria" },
-  { label: "Azerbaijan" },
-  { label: "Bahamas" },
-  { label: "Bahrain" },
-  { label: "Bangladesh" },
-  { label: "Barbados" },
-  { label: "Belarus" },
-  { label: "Belgium" },
-  { label: "Belize" },
-  { label: "Benin" },
-  { label: "Bermuda" },
-  { label: "Bhutan" },
-  { label: "Bolivia, Plurinational State of" },
-  { label: "Bonaire, Sint Eustatius and Saba" },
-  { label: "Bosnia and Herzegovina" },
-  { label: "Botswana" },
-  { label: "Bouvet Island" },
-  { label: "Brazil" },
-  { label: "British Indian Ocean Territory" },
-  { label: "Brunei Darussalam" }
-];
-
 function renderInput(inputProps) {
   const { InputProps, classes, ref, ...other } = inputProps;
-  console.log(InputProps);
-  console.log(other);
 
   return (
     <TextField
@@ -113,7 +74,7 @@ renderSuggestion.propTypes = {
   }).isRequired
 };
 
-function getSuggestions(value, { showEmpty = false } = {}) {
+function getSuggestions(suggestions, value, { showEmpty = false } = {}) {
   const inputValue = deburr(value.trim()).toLowerCase();
   const inputLength = inputValue.length;
   let count = 0;
@@ -135,8 +96,7 @@ function getSuggestions(value, { showEmpty = false } = {}) {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    height: 250
+    flexGrow: 1
   },
   container: {
     flexGrow: 1,
@@ -213,14 +173,15 @@ const SearchInput = props => {
                       width: popperNode ? popperNode.clientWidth : undefined
                     }}
                   >
-                    {getSuggestions(inputValue).map((suggestion, index) =>
-                      renderSuggestion({
-                        suggestion,
-                        index,
-                        itemProps: getItemProps({ item: suggestion.label }),
-                        highlightedIndex,
-                        selectedItem
-                      })
+                    {getSuggestions(props.suggestions, inputValue).map(
+                      (suggestion, index) =>
+                        renderSuggestion({
+                          suggestion,
+                          index,
+                          itemProps: getItemProps({ item: suggestion.label }),
+                          highlightedIndex,
+                          selectedItem
+                        })
                     )}
                   </Paper>
                 </div>

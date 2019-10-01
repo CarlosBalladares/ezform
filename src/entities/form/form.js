@@ -8,7 +8,7 @@ class form {
       throw new Error("Form is not valid");
     }
 
-    this._definition = definition;
+    this._definition = definition; // test
   }
 }
 export default form;
